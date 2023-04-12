@@ -93,7 +93,7 @@ namespace WebApp.Controllers
             _context.Aufgabe.Add(aufgabe);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAufgabe", new { id = aufgabe.Id }, aufgabe);
+            return CreatedAtAction("GetAufgabe", new { id = aufgabe.Id }, aufgabe); //wos mocht des 🤡🤡🤡🤡🤡
         }
 
         // DELETE: api/AufgabenApi/5
