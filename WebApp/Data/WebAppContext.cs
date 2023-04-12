@@ -9,7 +9,7 @@ namespace WebApp.Data
 {
     public class WebAppContext : DbContext // Definiert einen DbContext für die Datenbankkommunikation
     {
-        public WebAppContext(DbContextOptions<WebAppContext> options)
+        public WebAppContext(DbContextOptions<WebAppContext> options) //neue instanz von DBContext
             : base(options) // Konstruktor, der DbContextOptions entgegennimmt und an die Basisklasse DbContext weiterleitet
         {
         }
