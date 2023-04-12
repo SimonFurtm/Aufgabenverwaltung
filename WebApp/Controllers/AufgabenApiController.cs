@@ -10,10 +10,12 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
+    //api/aufgabenapi
     [Route("api/[controller]")]
     [ApiController]
     public class AufgabenApiController : ControllerBase
     {
+        //Datenbank-Kontext Objekt
         private readonly WebAppContext _context;
 
         public AufgabenApiController(WebAppContext context)
@@ -25,10 +27,13 @@ namespace WebApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Aufgabe>>> GetAufgabe()
         {
-          if (_context.Aufgabe == null)
-          {
-              return NotFound();
-          }
+            //Wenn es kein Aufgaben gibt
+            if (_context.Aufgabe == null)
+            {
+                //HTTP-Antwort mit 403 nicht gefunden
+                return NotFound();
+            }
+            //Antwort als Aufgabenliste
             return await _context.Aufgabe.ToListAsync();
         }
 
@@ -36,49 +41,48 @@ namespace WebApp.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Aufgabe>> GetAufgabe(int id)
         {
-          if (_context.Aufgabe == null)
-          {
-              return NotFound();
-          }
-            var aufgabe = await _context.Aufgabe.FindAsync(id);
-
-            if (aufgabe == null)
+            //Wenn es keine Aufgaben gibt
+            if (_context.Aufgabe == null)
             {
+                //HTTP-Antwort mit 403 nicht gefunden
                 return NotFound();
             }
 
+            //Finde eine Aufgabe mit der Id
+            var aufgabe = await _context.Aufgabe.FindAsync(id);
+
+            //Wenn es diese gewisse Aufgabe nicht gibt
+            if (aufgabe == null)
+            {
+                //HTTP-Antwort mit 403 nicht gefunden
+                return NotFound();
+            }
+
+            //Aufgabe als HTTP-Antwort
             return aufgabe;
         }
 
         // PUT: api/AufgabenApi/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAufgabe(int id, Aufgabe aufgabe)
         {
+            //Wenn die Ids aus dem feld id und aufgabe.id nicht übereinstimmen
             if (id != aufgabe.Id)
             {
+                //HTTP-Antwort 400 Fehlerhafte Anfrage
                 return BadRequest();
             }
 
-            _context.Entry(aufgabe).State = EntityState.Modified;
+            //Änderung eines Datenbankeintrages mit EntityFramework
+            _context
+                .Entry(aufgabe)
+                .State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AufgabeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            //Versuche die Änderungen zu übernehmen
+            await _context.SaveChangesAsync();
 
-            return NoContent();
+            //Die erfolgreiche HTTP-Verarbeitung wird bestätigt (Code 200)
+            return Ok();
         }
 
         // POST: api/AufgabenApi
@@ -86,36 +90,39 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<ActionResult<Aufgabe>> PostAufgabe(Aufgabe aufgabe)
         {
-          if (_context.Aufgabe == null)
-          {
-              return Problem("Entity set 'WebAppContext.Aufgabe'  is null.");
-          }
+            //Aufgabe hizufügen
             _context.Aufgabe.Add(aufgabe);
+            //Änderungen übernehmen
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetAufgabe", new { id = aufgabe.Id }, aufgabe); //wos mocht des 🤡🤡🤡🤡🤡
+            //Erfolgreiche Verarbeitung bestätigen
+            return Ok();
         }
 
         // DELETE: api/AufgabenApi/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAufgabe(int id)
         {
+            //Wenn es keine Aufgaben gibt
             if (_context.Aufgabe == null)
             {
                 return NotFound();
             }
+            //Aufgabe finden
             var aufgabe = await _context.Aufgabe.FindAsync(id);
+            //Wenn es genau diese Aufgabe nicht gibt
             if (aufgabe == null)
             {
                 return NotFound();
             }
-
+            //Aufgabe entfernen
             _context.Aufgabe.Remove(aufgabe);
+            //Änderungen übernehmen
             await _context.SaveChangesAsync();
-
-            return NoContent();
+            //Erfolgreiche Verarbeitung bestätigen (HTTP 200)
+            return Ok();
         }
 
+        //Helferfunktion, um zu prüfen, ob Aufgabe existiert
         private bool AufgabeExists(int id)
         {
             return (_context.Aufgabe?.Any(e => e.Id == id)).GetValueOrDefault();

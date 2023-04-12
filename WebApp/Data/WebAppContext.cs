@@ -13,7 +13,7 @@ namespace WebApp.Data
             : base(options) // Konstruktor, der DbContextOptions entgegennimmt und an die Basisklasse DbContext weiterleitet
         {
         }
-
-        public DbSet<WebApp.Models.Aufgabe> Aufgabe { get; set; } = default!; // Eigenschaft, die die DbSet für die Tabelle 'Aufgabe' in der Datenbank darstellt
+        // Eigenschaft, die die DbSet für die Tabelle 'Aufgabe' in der Datenbank darstellt (Wird automatisch erstellt)
+        public virtual DbSet<WebApp.Models.Aufgabe> Aufgabe { get; set; } = default!; 
     }
 }
