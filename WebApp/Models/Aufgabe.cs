@@ -29,3 +29,4 @@ namespace WebApp.Models
         public bool Abgeschlossen { get; set; } // Eigenschaft für den Status der Aufgabe (abgeschlossen oder nicht)
     }
 }
+//* --> /Controllers/

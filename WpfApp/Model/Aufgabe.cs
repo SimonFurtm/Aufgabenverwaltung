@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WpfApp
+namespace WpfApp.Model
 {
     public class Aufgabe
     {
@@ -11,7 +11,7 @@ namespace WpfApp
         [Required]
         [StringLength(60, MinimumLength = 3)]
         public string Titel { get; set; } // Eigenschaft für den Titel der Aufgabe
-        
+
         [StringLength(254, MinimumLength = 3)] //max. Zeichen von String = 254 (256 Bytes)
         public string Beschreibung { get; set; } // Eigenschaft für die Beschreibung der Aufgabe
 

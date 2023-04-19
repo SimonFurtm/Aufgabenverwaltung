@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp.Model;
+using WpfApp.View;
 
 namespace WpfApp
 {
@@ -30,7 +32,7 @@ namespace WpfApp
 
         private async void getData()
         {
-            var apiUrl = "https://localhost:44325/api/AufgabenAPI";
+            var apiUrl = "https://localhost:7047/api/AufgabenApi";
             try
             {
                 //using (x wird nur im using verwendet){...} besser für speicher
@@ -52,7 +54,7 @@ namespace WpfApp
                                     dataListView.Items.Add(apiData[i]);
                                 }
                                 Console.WriteLine("Data Found.");
-                                consoleLabel.Content = "Data found!";
+                                consoleLabel.Content = "Suppa ois guad :)";
                             }
                             else
                             {
@@ -82,24 +84,30 @@ namespace WpfApp
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedUni = (Aufgabe)dataListView.SelectedValue;
+            var selectedAufgabe = (Aufgabe)dataListView.SelectedValue;
 
-            if (selectedUni != null)
+            if (selectedAufgabe != null)
             {
-                var infoWindow = new InfoScreen(selectedUni);
+                var infoWindow = new InfoScreen(selectedAufgabe);
                 infoWindow.Show();
             }
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedUni = (Aufgabe)dataListView.SelectedValue;
+            var selectedAufgabe = (Aufgabe)dataListView.SelectedValue;
 
-            if (selectedUni != null)
+            if (selectedAufgabe != null)
             {
-                var infoWindow = new InfoScreen(selectedUni);
+                var infoWindow = new InfoScreen(selectedAufgabe);
                 infoWindow.Show();
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            dataListView.Items.Clear();
+            getData();
         }
     }
 }

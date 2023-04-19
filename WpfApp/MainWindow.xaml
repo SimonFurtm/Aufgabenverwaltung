@@ -7,15 +7,16 @@
         Icon="https://cdn-icons-png.flaticon.com/512/9741/9741134.png"
         mc:Ignorable="d"
         Title="Aufgabenverwaltung" Height="450" Width="600">
-    <Grid>
-        <Label HorizontalAlignment="Left" Content="Aufgaben Liste:" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="22" Width="390" Grid.ColumnSpan="2"/>
-        <Label x:Name="consoleLabel" Content=" " HorizontalAlignment="Left" Margin="178,10,0,0" VerticalAlignment="Top" FontSize="22" Width="412"/>
-        <ListView x:Name="dataListView" Margin="10,54,10,0" SelectionChanged="ListView_SelectionChanged">
+    <Grid Margin="0,0,0,-6">
+        <Label HorizontalAlignment="Left" Content="Aufgaben Liste:" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="22" Width="168"/>
+        <Label x:Name="consoleLabel" HorizontalAlignment="Left" Margin="178,10,0,0" VerticalAlignment="Top" FontSize="22" Width="312" Height="34"/>
+        <Button Content="Aktualisieren" Height="35" Width="100" Click="Button_Click" Margin="490,10,10,395" />
+        <ListView x:Name="dataListView" Margin="10,49,10,10" SelectionChanged="ListView_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn x:Name="Titel" DisplayMemberBinding="{Binding Titel}" Header="Land"/>
-                    <GridViewColumn x:Name="FälligkeitsDatum" DisplayMemberBinding="{Binding Fälligkeitsdatum}" Header="Kürzel"/>
-                    <GridViewColumn x:Name="Abgeschlossen" DisplayMemberBinding="{Binding Abgeschlossen}" Header="Name"/>
+                    <GridViewColumn x:Name="Titel" DisplayMemberBinding="{Binding Titel}" Header="Titel"/>
+                    <GridViewColumn x:Name="FälligkeitsDatum" DisplayMemberBinding="{Binding Fälligkeitsdatum}" Header="FälligkeitsDatum"/>
+                    <GridViewColumn x:Name="Abgeschlossen" DisplayMemberBinding="{Binding Abgeschlossen}" Header="Abgeschlossen"/>
                 </GridView>
             </ListView.View>
         </ListView>

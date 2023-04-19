@@ -10,8 +10,9 @@ namespace WebApp.Models
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
+            //stellt sicher, dass die Context-Instanz ordnungsgemäß verwaltet wird 
             using (var context = new WebAppContext(
-                serviceProvider.GetRequiredService<DbContextOptions<WebAppContext>>()))
+                serviceProvider.GetRequiredService<DbContextOptions<WebAppContext>>())) //EF
             {
                 // Überprüfen, ob bereits Aufgaben in der Datenbank vorhanden sind
                 if (context.Aufgabe.Any())

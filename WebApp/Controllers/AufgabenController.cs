@@ -12,6 +12,7 @@ namespace WebApp.Controllers
 {
     public class AufgabenController : Controller
     {
+        //Datenbank-Kontext Objekt
         private readonly WebAppContext _context;
 
         public AufgabenController(WebAppContext context)
@@ -23,7 +24,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Index()
         {
               return _context.Aufgabe != null ? 
-                          View(await _context.Aufgabe.ToListAsync()) :
+                          View(await _context.Aufgabe.ToListAsync()) :  
                           Problem("Entity set 'WebAppContext.Aufgabe'  is null.");
         }
 
@@ -34,9 +35,9 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-
+            //Suche nach der Aufgabe mit der übergebenen ID im Entity-Set 'WebAppContext.Aufgabe'
             var aufgabe = await _context.Aufgabe
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(e => e.Id == id); //id-parameter des ersten eintrag wird mit der id verglichen
             if (aufgabe == null)
             {
                 return NotFound();
@@ -52,10 +53,11 @@ namespace WebApp.Controllers
         }
 
         // POST: Aufgaben/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        //stellt sicher, ob Anfrage von einer vertrauenswürdigen Quelle stammt
+        //Schutzmechanismus gegen Cross-Site Request Forgery (CSRF) Angriffe
         [ValidateAntiForgeryToken]
+        //Bind gibt die Eigenschaften mit, die verwendet werden sollen
         public async Task<IActionResult> Create([Bind("Id,Titel,Beschreibung,Fälligkeitsdatum,Erstelldatum,Abgeschlossen")] Aufgabe aufgabe)
         {
             if (ModelState.IsValid)
@@ -84,10 +86,11 @@ namespace WebApp.Controllers
         }
 
         // POST: Aufgaben/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        //stellt sicher, ob Anfrage von einer vertrauenswürdigen Quelle stammt
+        //Schutzmechanismus gegen Cross-Site Request Forgery (CSRF) Angriffe
         [ValidateAntiForgeryToken]
+        //Bind gibt die Eigenschaften mit, die verwendet werden sollen
         public async Task<IActionResult> Edit(int id, [Bind("Id,Titel,Beschreibung,Fälligkeitsdatum,Erstelldatum,Abgeschlossen")] Aufgabe aufgabe)
         {
             if (id != aufgabe.Id)
@@ -102,9 +105,9 @@ namespace WebApp.Controllers
                     _context.Update(aufgabe);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException) //behandelt gleichzeitigen Zugriff auf die Datenbank
                 {
-                    if (!AufgabeExists(aufgabe.Id))
+                    if (!AufgabeExists(aufgabe.Id)) 
                     {
                         return NotFound();
                     }
@@ -138,13 +141,16 @@ namespace WebApp.Controllers
 
         // POST: Aufgaben/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        //stellt sicher, ob Anfrage von einer vertrauenswürdigen Quelle stammt
+        //Schutzmechanismus gegen Cross-Site Request Forgery (CSRF) Angriffe
+        [ValidateAntiForgeryToken]         
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Aufgabe == null)
             {
                 return Problem("Entity set 'WebAppContext.Aufgabe'  is null.");
             }
+            //Suche nach der Aufgabe mit der übergebenen ID im Entity-Set 'WebAppContext.Aufgabe'
             var aufgabe = await _context.Aufgabe.FindAsync(id);
             if (aufgabe != null)
             {
@@ -155,6 +161,7 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //Helferfunktion, um zu prüfen, ob Aufgabe existiert
         private bool AufgabeExists(int id)
         {
           return (_context.Aufgabe?.Any(e => e.Id == id)).GetValueOrDefault();

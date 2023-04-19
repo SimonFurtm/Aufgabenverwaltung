@@ -30,7 +30,7 @@ namespace WebApp.Controllers
             //Wenn es kein Aufgaben gibt
             if (_context.Aufgabe == null)
             {
-                //HTTP-Antwort mit 403 nicht gefunden
+                //HTTP-Antwort mit 404 nicht gefunden
                 return NotFound();
             }
             //Antwort als Aufgabenliste
@@ -44,7 +44,7 @@ namespace WebApp.Controllers
             //Wenn es keine Aufgaben gibt
             if (_context.Aufgabe == null)
             {
-                //HTTP-Antwort mit 403 nicht gefunden
+                //HTTP-Antwort mit 404 nicht gefunden
                 return NotFound();
             }
 
@@ -54,7 +54,7 @@ namespace WebApp.Controllers
             //Wenn es diese gewisse Aufgabe nicht gibt
             if (aufgabe == null)
             {
-                //HTTP-Antwort mit 403 nicht gefunden
+                //HTTP-Antwort mit 404 nicht gefunden
                 return NotFound();
             }
 

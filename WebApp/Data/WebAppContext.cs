@@ -7,13 +7,15 @@ using WebApp.Models;
 
 namespace WebApp.Data
 {
-    public class WebAppContext : DbContext // Definiert einen DbContext für die Datenbankkommunikation
+    public class WebAppContext : DbContext //Definiert einen DbContext für die Datenbankkommunikation
     {
         public WebAppContext(DbContextOptions<WebAppContext> options) //neue instanz von DBContext
-            : base(options) // Konstruktor, der DbContextOptions entgegennimmt und an die Basisklasse DbContext weiterleitet
+            //Konstruktor, der DbContextOptions entgegennimmt und an die Basisklasse DbContext weiterleitet
+            : base(options) 
         {
         }
-        // Eigenschaft, die die DbSet für die Tabelle 'Aufgabe' in der Datenbank darstellt (Wird automatisch erstellt)
-        public virtual DbSet<WebApp.Models.Aufgabe> Aufgabe { get; set; } = default!; 
+        //Eigenschaft, die die DbSet für die Tabelle 'Aufgabe' in der Datenbank darstellt (wird automatisch erstellt)
+        public virtual DbSet<WebApp.Models.Aufgabe> Aufgabe { get; set; } = default!; //überschreibbar durch virtual
+        //* --> Aufgabe.cs
     }
 }
